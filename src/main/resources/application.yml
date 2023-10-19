@@ -24,6 +24,10 @@ spring:
           uri: lb://CHECK-DUPLICATE-SERVICE
           predicates:
             - Path=/check-duplicate/**
+        - id: SEARCH-SERVICE
+          uri: lb://SEARCH-SERVICE
+          predicates:
+            - Path=/search/**
       discovery:
         locator:
           enabled: true
