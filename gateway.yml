@@ -1,0 +1,25 @@
+---
+- hosts : ansible
+  tasks :
+    - name : create docker image
+      command : docker build -t gateway-service:latest .
+      args : 
+        chdir: /opt/docker/gateway-service
+    
+    - name : create tag to push image into dockerhub
+      command : docker tag gateway-service:latest janescience/gateway-service:latest
+
+    - name : push docker image
+      command : docker push janescience/gateway-service:latest
+
+    - name : stop docker container
+      command : docker stop gateway-service
+      ignore_errors: yes
+
+    - name : remove docker container
+      command : docker rm gateway-service
+      ignore_errors: yes
+
+    - name : remove docker image
+      command : docker rmi -f janescience/gateway-service
+      ignore_errors: yes
